@@ -3,9 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Console\View\Components\Task;
+use Database\Seeders\TaskSeeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,10 +17,13 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => 'Nuglushka',
+            'email' => 'ryan@prophettic.com',
+            'password' => Hash::make('password'),
         ]);
 
-        Task::factory()->count(10)->create();
+        $this->call([
+            TaskSeeder::class,
+        ]);
     }
 }

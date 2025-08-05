@@ -1,13 +1,13 @@
 <?php
 
-namespace App;
+namespace App\Enums;
 
 enum TaskType: string
 {
     case Call = 'call';
     case Do = 'do';
     case Go = 'go';
-    
+
     public function label(): string
     {
         return match ($this) {

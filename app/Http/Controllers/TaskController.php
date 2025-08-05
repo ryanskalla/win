@@ -12,7 +12,9 @@ class TaskController extends Controller
      */
     public function index()
     {
-        //
+        $tasks = Task::withToday()->get();
+
+        return view('welcome', compact('tasks'));
     }
 
     /**

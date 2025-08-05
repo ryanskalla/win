@@ -5,9 +5,12 @@ namespace App\Models;
 use App\Enums\Quadrant;
 use App\Enums\TaskType;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Task extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'type',
         'description',
@@ -119,5 +122,65 @@ class Task extends Model
     public function quadrantAction()
     {
         return $this->quadrant->action();
+    }
+
+    public function scopeWithToday($query)
+    {
+        return $query->whereDate('start_at', '<=', now())
+            ->whereDate('end_at', '>=', now());
+    }
+
+    public function scopeWithPastAndIncomplete($query)
+    {
+        return $query->whereDate('start_at', '<', now())
+            ->whereNull('completed_at');
+    }
+
+    public function scopeWithIncomplete($query)
+    {
+        return $query->whereNull('completed_at');
+    }
+
+    public function scopeWithCompleted($query)
+    {
+        return $query->whereNotNull('completed_at');
+    }
+
+    public function isInProgress()
+    {
+        return $this->isScheduled() && !$this->isCompleted();
+    }
+
+    public function isNotInProgress()
+    {
+        return !$this->isScheduled() || $this->isCompleted();
+    }
+
+    public function isOverdue()
+    {
+        return $this->start_at < now() && !$this->isCompleted();
+    }
+
+    public function isDueToday()
+    {
+        return $this->start_at->isToday() && !$this->isCompleted();
+    }
+
+    public function isDueTomorrow()
+    {
+        return $this->start_at->isTomorrow() && !$this->isCompleted();
+    }
+
+    public function status(): string
+    {
+        return match(true) {
+            $this->isCompleted() => 'completed',
+            $this->isOverdue() => 'overdue',
+            $this->isDueToday() => 'due_today',
+            $this->isDueTomorrow() => 'due_tomorrow',
+            $this->isInProgress() => 'in_progress',
+            $this->isNotInProgress() => 'not_in_progress',
+            default => 'pending',
+        };
     }
 }

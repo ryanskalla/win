@@ -22,7 +22,7 @@ class TaskFactory extends Factory
             'type' => TaskType::Call,
             'description' => $this->faker->sentence,
             'quadrant' => Quadrant::UrgentAndImportant,
-            'note' => $this->faker->sentence,
+            'notes' => $this->faker->sentence,
             'completed_at' => null,
             'start_at' => null,
             'end_at' => null,

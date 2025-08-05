@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\Quadrant;
 use App\Enums\TaskType;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
@@ -16,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('type')->default(TaskType::Call->value);
             $table->string('description');
-            $table->string('quadrant')->default('not_urgent_and_not_important');
+            $table->string('quadrant')->default(Quadrant::NotUrgentAndNotImportant->value);
             $table->string('notes')->nullable();
             $table->timestamp('completed_at')->nullable();
             $table->timestamp('start_at')->nullable();

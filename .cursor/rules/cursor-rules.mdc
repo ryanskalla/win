@@ -1,0 +1,127 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+You are an expert in Laravel, PHP, Livewire, Alpine.js, TailwindCSS, and FluxUI.
+
+Key Principles
+- Write concise, technical responses with accurate PHP/Laravel examples.
+- Follow Laravel best practices and conventions.
+- Prefer iteration and modularization over duplication.
+- Use descriptive variable and method names.
+- Use lowercase with dashes for directories (e.g., app/Http/Controllers, app/Http/Livewire).
+- Favor dependency injection and service containers.
+- Design for scalability and maintainability, ensuring the system can grow with ease.
+- Prioritize SOLID principles for object-oriented programming and clean architecture.
+- Follow PHP and Laravel best practices, ensuring consistency and readability.
+- Focus on component-based architecture using Livewire and Laravel's latest features.
+
+PHP/Laravel
+- Use PHP 8.4+ features when appropriate (e.g., typed properties, match expressions, union types, nullable types).
+- Follow PSR-12 coding standards.
+- Utilize Laravel's built-in features and helpers when possible.
+- File structure: Follow Laravel's directory structure and naming conventions.
+- Implement proper error handling and logging:
+    - Use Laravel's exception handling and logging features.
+    - Create custom exceptions when necessary.
+    - Use try-catch blocks for expected exceptions.
+- Use Laravel's validation features for form and request validation.
+- Implement middleware for request filtering and modification.
+- Utilize Laravel's Eloquent ORM for database interactions.
+- Use Laravel's query builder for complex database queries.
+- Implement proper database migrations and seeders.
+- Be consistent and explicit with data type declarations throughout the codebase.
+- Use type hints for properties, method parameters, and return types.
+
+Livewire
+- Use Livewire for dynamic components and real-time user interactions.
+- Favor the use of Livewire's lifecycle hooks and properties.
+- Use the latest Livewire (3.5+) features for optimization and reactivity.
+- Implement Blade components with Livewire directives (e.g., wire:model).
+- Handle state management and form handling using Livewire properties and actions.
+- Use wire:loading and wire:target to provide feedback and optimize user experience.
+- Apply Livewire's security measures for components.
+- Use Livewire components to break down complex UIs into smaller, reusable units.
+
+Tailwind CSS & FluxUI
+- Use Tailwind CSS for styling components, following a utility-first approach.
+- Leverage FluxUI's pre-built components for quick UI development.
+- Follow a consistent design language using Tailwind CSS classes and FluxUI themes.
+- Implement responsive design and dark mode using Tailwind and FluxUI utilities.
+- Optimize for accessibility (e.g., aria-attributes) when using components.
+
+Dependencies
+- Laravel 12.0+
+- Livewire 3.5+ for real-time, reactive components
+- Alpine.js for lightweight JavaScript interactions
+- Tailwind CSS for utility-first styling
+- FluxUI for pre-built UI components and themes
+- Composer for dependency management
+- NPM/Yarn for frontend dependencies
+- PHP 8.4+
+
+Laravel Best Practices
+- Use Eloquent ORM instead of raw SQL queries when possible.
+- Models and migrations should always use SoftDeletes.
+- Implement Repository pattern for data access layer.
+- Implement Repository and Service patterns for better code organization and reusability.
+- Use Laravel's built-in authentication and authorization features.
+- Utilize Laravel's database caching mechanism.
+- Implement job queues and Laravel Horizon for handling long-running tasks and background processing.
+- Implement job queues for long-running tasks.
+- Use Laravel's built-in testing tools (Pest, Dusk) for unit and feature tests.
+- Implement API versioning for public APIs.
+- Use API resources and versioning for building robust and maintainable APIs.
+- Use Laravel's localization features for multi-language support.
+- Implement proper CSRF protection and security measures.
+- Implement proper security measures, including CSRF protection, XSS prevention, and input sanitization.
+- Use Vite for asset compilation.
+- Implement proper database indexing for improved query performance.
+- Use Laravel's built-in pagination features.
+- Implement proper error logging and monitoring.
+- Implement proper database transactions for data integrity.
+- Implement proper error handling and logging using Laravel's exception handler and logging facade.
+- Utilize Laravel's validation features, including Form Requests, for data integrity.
+- Use Laravel Telescope for debugging and performance monitoring in development.
+- Leverage Laravel Nova or Filament for rapid admin panel development.
+- Use $this->fake() not fake().
+- Always use foreignIdFor(Model::class) when creating relationships in migrations
+- When using $table->morphs() in migrations, use semantic names that describe the relationship (e.g., 'commentable', 'likeable', 'taggable', 'notifiable', 'touchable', etc.)
+
+Key Conventions / Code Architecture
+- Do NOT use React or Vue components. Only use Livewire with FluxUI and Blade components
+- Do not use the enum datatype as a database column. Instead, create an appropriately named string-backed enum class in the Enums folder if one does not already exist. Also include in the class a function called description with short, human-readable values. Add the enum class to casts function with the associated model if one exists.
+- Follow Laravel's MVC and component-based architecture.
+- Use Laravel's routing system for defining application endpoints.
+- Implement proper request validation using Form Requests.
+- Use Laravel's Blade templating engine for views.
+- Use Livewire and Blade components for interactive UIs.
+- Implement proper database relationships using Eloquent.
+- Use Laravel's built-in authentication scaffolding.
+- Implement proper API resource transformations.
+- Use Laravel's event and listener system for decoupled code.
+- Create separate route files for each major model or feature area.
+- Group related routes together (e.g., all user-related routes in routes/user.php).
+- Maintain consistent and organized routes.
+- Always use explicit return type declarations for methods and functions.
+- Use appropriate PHP type hints for method parameters.
+- Naming Conventions:
+    - Use consistent naming conventions for folders, classes, and files.
+    - Follow Laravel's conventions: singular for models, plural for controllers (e.g., User.php, UsersController.php).
+    - Use PascalCase for class names, camelCase for method names, and snake_case for database columns.
+- Controller Design:
+    - Controllers should be final classes to prevent inheritance.
+    - Make controllers read-only (i.e., no property mutations).
+    - Avoid injecting dependencies directly into controllers. Instead, use method injection or service classes.
+- Model Design:
+    - Models should be final classes to ensure data integrity and prevent unexpected behavior from inheritance.
+- Services:
+    - Create a Services folder within the app directory.
+    - Organize services into model-specific services and other required services.
+    - Service classes should be final and read-only.
+    - Use services for complex business logic, keeping controllers thin.
+- Follow Laravel’s MVC architecture for clear separation of business logic, data, and presentation layers.
+- Ensure the REST API follows Laravel standards, using API Resources for structured and consistent responses.
+- Leverage task scheduling and event listeners to automate recurring tasks and decouple logic.
+- Optimize performance with Laravel's database table caching mechanism.
