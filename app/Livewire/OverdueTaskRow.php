@@ -4,33 +4,32 @@ namespace App\Livewire;
 
 use App\Models\Task;
 use Livewire\Component;
+use Livewire\Attributes\Computed;
 
 class OverdueTaskRow extends Component
 {
     public Task $task;
-    public bool $completed;
 
     public function mount(Task $task)
     {
         $this->task = $task;
-        $this->completed = $task->isCompleted();
+    }
+
+    #[Computed]
+    public function isCompleted()
+    {
+        return $this->task->isCompleted();
     }
 
     public function toggleCompletion()
     {
-        $this->completed = !$this->completed;
-        
-        if ($this->completed) {
-            $this->task->update(['completed_at' => now()]);
-        } else {
+        if ($this->task->isCompleted()) {
             $this->task->update(['completed_at' => null]);
+        } else {
+            $this->task->update(['completed_at' => now()]);
         }
         
-        // Refresh the task model to get updated data
         $this->task->refresh();
-        
-        // Emit event to refresh parent component sorting
-        $this->dispatch('task-completion-toggled');
     }
 
     public function render()

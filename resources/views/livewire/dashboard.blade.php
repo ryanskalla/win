@@ -2,11 +2,13 @@
     <x-layouts.app :title="__('Dashboard')">
         <div class="flex h-full w-full flex-1 flex-col gap-4 rounded-xl">
             <div class="relative w-full overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700">
-                <flux:heading size="xl">
-                    {{ \Carbon\Carbon::now()->translatedFormat('l, F j, Y') }}
-                </flux:heading>
-                <div class="absolute bottom-4 left-4 text-3xl font-bold text-gray-900 dark:text-neutral-100">
-                    Q{{ now()->quarter }} | {{ floor(now()->diffInDays(now()->endOfYear())) }} days | {{ Number::format(floor(now()->diffInHours(now()->endOfYear()))) }} hours 
+                <div class="flex items-center justify-between w-full px-6 py-6 relative">
+                    <flux:heading size="xl">
+                        {{ \Carbon\Carbon::now()->translatedFormat('l, F j, Y') }}
+                    </flux:heading>
+                    <div class="text-3xl font-bold text-gray-900 dark:text-neutral-100">
+                        Q{{ now()->quarter }} | {{ floor(now()->diffInDays(now()->endOfYear())) }} days | {{ Number::format(floor(now()->diffInHours(now()->endOfYear()))) }} hours 
+                    </div>
                 </div>
             </div>
             <div class="relative h-full flex-1 overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700" 
@@ -15,8 +17,7 @@
                  @keydown.ctrl.c.window="sidebarOpen = true"
                  @keydown.escape.window="sidebarOpen = false"
                  @close-sidebar.window="sidebarOpen = false"
-                 @task-created.window="sidebarOpen = false; $wire.$refresh()"
-                 @task-completion-toggled.window="$wire.$refresh()">
+                 @task-created.window="sidebarOpen = false; $wire.$refresh()">
                 <div class="flex items-center justify-between p-4 border-b border-neutral-200 dark:border-neutral-700">
                     <flux:heading size="lg">Today's Tasks ({{ $todayTasks->count() }})</flux:heading>
                     <flux:button color="blue" @click="sidebarOpen = true">
@@ -79,15 +80,14 @@
 
             @if($overdueTasks->count() > 0)
             <div class="relative h-full flex-1 overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700" 
-                 x-data="{ sidebarOpen: false }"
-                 @task-completion-toggled.window="$wire.$refresh()">
+                 x-data="{ sidebarOpen: false }">
                 <div class="flex items-center justify-between p-4 border-b border-neutral-200 dark:border-neutral-700">
                         <flux:heading size="lg">Overdue Tasks ({{ $overdueTasks->count() }})</flux:heading>
                 </div>
                 
                 <flux:table>
                     <flux:table.columns>
-                        <flux:table.column>Created</flux:table.column>
+                        <flux:table.column>Due Date</flux:table.column>
                         <flux:table.column>Completed</flux:table.column>    
                         <flux:table.column>Action</flux:table.column>
                         <flux:table.column>Description</flux:table.column>

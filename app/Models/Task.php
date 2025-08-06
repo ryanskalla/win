@@ -131,7 +131,7 @@ class Task extends Model
     public function scopeWithOverdue($query)
     {
         return $query
-        ->whereDate('created_at', '<', now()->subDays(1)->toDateString())
+        ->whereDate('created_at', '<', now()->toDateString())
         ->orderByRaw('completed_at is null desc')
         ->orderBy('completed_at', 'asc')
         ->orderBy('created_at', 'desc')
