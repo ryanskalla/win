@@ -43,9 +43,9 @@ enum Quadrant: string
     {
         return match ($this) {
             self::UrgentAndImportant => 'exclamation-triangle',
-            self::NotUrgentButImportant => 'exclamation-triangle',
-            self::UrgentButNotImportant => 'exclamation-triangle',
-            self::NotUrgentAndNotImportant => 'exclamation-triangle',
+            self::NotUrgentButImportant => 'star',
+            self::UrgentButNotImportant => 'clock',
+            self::NotUrgentAndNotImportant => 'trash',
         };
     }
 }

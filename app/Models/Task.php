@@ -29,11 +29,6 @@ class Task extends Model
         'quadrant' => Quadrant::class,
     ];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
     public function quadrant()
     {
         return $this->belongsTo(Quadrant::class);
@@ -126,19 +121,21 @@ class Task extends Model
 
     public function scopeWithToday($query)
     {
-        return $query->whereDate('start_at', '<=', now())
-            ->whereDate('end_at', '>=', now());
+    return $query->whereDate('created_at', now()->toDateString())
+    ->orderByRaw('completed_at is null desc')
+    ->orderBy('completed_at', 'asc')
+    ->orderBy('start_at', 'desc')
+    ->orderBy('type', 'asc');
     }
 
-    public function scopeWithPastAndIncomplete($query)
+    public function scopeWithOverdue($query)
     {
-        return $query->whereDate('start_at', '<', now())
-            ->whereNull('completed_at');
-    }
-
-    public function scopeWithIncomplete($query)
-    {
-        return $query->whereNull('completed_at');
+        return $query
+        ->whereDate('created_at', '<', now()->subDays(1)->toDateString())
+        ->orderByRaw('completed_at is null desc')
+        ->orderBy('completed_at', 'asc')
+        ->orderBy('created_at', 'desc')
+        ->orderBy('start_at', 'asc');
     }
 
     public function scopeWithCompleted($query)

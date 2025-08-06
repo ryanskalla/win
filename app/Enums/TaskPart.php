@@ -25,10 +25,10 @@ enum TaskPart: string
     {
         return match ($this) {
             self::Who => 'user',
-            self::What => 'question',
-            self::Why => 'question',
+            self::What => 'question-mark-circle',
+            self::Why => 'question-mark-circle',
             self::When => 'calendar',
-            self::Where => 'map-marker-alt',
+            self::Where => 'map-pin',
         };
     }
 

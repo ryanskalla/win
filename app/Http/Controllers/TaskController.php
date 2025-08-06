@@ -12,9 +12,10 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Task::withToday()->get();
+        $todayTasks = Task::withToday()->get();
+        $incompleteTasks = Task::withIncomplete()->get();
 
-        return view('welcome', compact('tasks'));
+        return view('welcome', compact('todayTasks', 'incompleteTasks'));
     }
 
     /**
