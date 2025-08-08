@@ -12,12 +12,13 @@
                 </div>
             </div>
             <div class="relative w-full overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700" 
-                 x-data="{ sidebarOpen: false }"
+                 x-data="{ sidebarOpen: false }" wire:key="dashboard-main"
                  @keydown.cmd.c.window="sidebarOpen = true"
                  @keydown.ctrl.c.window="sidebarOpen = true"
                  @keydown.escape.window="sidebarOpen = false"
                  @close-sidebar.window="sidebarOpen = false"
-                 @task-created.window="sidebarOpen = false; $wire.$refresh()">
+                 @task-created.window="sidebarOpen = false; $wire.$refresh()"
+                 @task-updated.window="sidebarOpen = false; $wire.$refresh()">
                 <div class="flex items-center justify-between p-4 border-b border-neutral-200 dark:border-neutral-700">
                     <flux:heading size="lg">Today's Tasks ({{ $todayTasks->count() }})</flux:heading>
                     <flux:button color="blue" @click="sidebarOpen = true">
@@ -53,7 +54,8 @@
                 </div>
 
                 <!-- Right Sidebar -->
-                <div x-show="sidebarOpen" 
+                <div x-show="sidebarOpen" wire:ignore
+                     x-bind:class="{ 'hidden': !sidebarOpen }"
                      x-transition:enter="transition ease-out duration-300"
                      x-transition:enter-start="opacity-0"
                      x-transition:enter-end="opacity-100"
@@ -64,7 +66,9 @@
                      x-cloak>
                     
                     <!-- Backdrop -->
-                    <div class="absolute inset-0 bg-black bg-opacity-50" @click="sidebarOpen = false"></div>
+                    <div class="absolute inset-0 bg-black bg-opacity-50" 
+                         x-bind:class="{ 'pointer-events-none': !sidebarOpen }"
+                         @click="sidebarOpen = false"></div>
                     
                     <!-- Sidebar -->
                     <div class="absolute right-0 top-0 h-full w-full max-w-md bg-white dark:bg-gray-900 shadow-xl"

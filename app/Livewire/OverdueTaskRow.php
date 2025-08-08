@@ -30,6 +30,9 @@ class OverdueTaskRow extends Component
         }
         
         $this->task->refresh();
+
+        // Notify parent via browser window event to avoid Alpine overlay flicker
+        $this->dispatch('task-updated');
     }
 
     public function render()

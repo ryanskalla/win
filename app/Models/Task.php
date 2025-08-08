@@ -132,6 +132,7 @@ class Task extends Model
     {
         return $query
         ->whereDate('created_at', '<', now()->toDateString())
+        ->where('completed_at', null)
         ->orderByRaw('completed_at is null desc')
         ->orderBy('completed_at', 'asc')
         ->orderBy('created_at', 'desc')
