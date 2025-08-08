@@ -34,4 +34,13 @@ enum TaskType: string
             self::Go => 'red',
         };
     }
+
+    public function order(): int
+    {
+        return match ($this) {
+            self::Call => 1,
+            self::Do => 2,
+            self::Go => 3,
+        };
+    }
 }

@@ -31,8 +31,8 @@ class TaskRow extends Component
         
         $this->task->refresh();
 
-        // Notify parent via browser window event to avoid Alpine overlay flicker
-        $this->dispatch('task-updated');
+        // Ask parent Dashboard to re-render
+        $this->dispatch('$refresh')->to(\App\Livewire\Dashboard::class);
     }
 
     public function render()

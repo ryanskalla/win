@@ -173,4 +173,13 @@ class TaskFactory extends Factory
             ];
         });
     }
+
+    public function overdue(): Factory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'created_at' => now()->subDays(1),
+            ];
+        });
+    }
 }

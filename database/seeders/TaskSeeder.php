@@ -13,15 +13,23 @@ class TaskSeeder extends Seeder
      */
     public function run(): void
     {
-        Task::factory()->count(3)->create();
         Task::factory()->count(3)->completed()->create();
         Task::factory()->count(3)->scheduled()->create();
-        Task::factory()->count(3)->urgentAndImportant()->create();
-        Task::factory()->count(3)->notUrgentButImportant()->create();
-        Task::factory()->count(3)->urgentButNotImportant()->create();
-        Task::factory()->count(3)->notUrgentAndNotImportant()->create();
-        Task::factory()->count(3)->call()->create();
-        Task::factory()->count(3)->do()->create();
-        Task::factory()->count(3)->go()->create();
+        Task::factory()->count(2)->call()->create();
+        Task::factory()->count(2)->call()->notUrgentButImportant()->create();
+        Task::factory()->count(2)->call()->urgentButNotImportant()->create();
+        Task::factory()->count(2)->call()->notUrgentAndNotImportant()->create();
+        Task::factory()->count(2)->do()->create();
+        Task::factory()->count(2)->do()->notUrgentButImportant()->create();
+        Task::factory()->count(2)->do()->urgentButNotImportant()->create();
+        Task::factory()->count(2)->do()->notUrgentAndNotImportant()->create();
+        Task::factory()->count(2)->go()->create();
+        Task::factory()->count(2)->go()->notUrgentButImportant()->create();
+        Task::factory()->count(2)->go()->urgentButNotImportant()->create();
+        Task::factory()->count(2)->go()->notUrgentAndNotImportant()->create();
+        Task::factory()->count(3)->overdue()->create();
+        Task::factory()->count(1)->overdue()->urgentButNotImportant()->create();
+        Task::factory()->count(1)->overdue()->notUrgentButImportant()->create();
+        Task::factory()->count(1)->overdue()->notUrgentAndNotImportant()->create();
     }
 }

@@ -13,7 +13,6 @@
             </div>
             <div class="relative w-full overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700" 
                  x-data="{ sidebarOpen: false }" wire:key="dashboard-main"
-                 @keydown.cmd.c.window="sidebarOpen = true"
                  @keydown.ctrl.c.window="sidebarOpen = true"
                  @keydown.escape.window="sidebarOpen = false"
                  @close-sidebar.window="sidebarOpen = false"
@@ -31,16 +30,16 @@
                 <flux:table>
                     <flux:table.columns>
                         <flux:table.column>Completed</flux:table.column>    
+                        <flux:table.column>Quadrant</flux:table.column>
                         <flux:table.column>Action</flux:table.column>
                         <flux:table.column>Description</flux:table.column>
                         <flux:table.column>Time Block</flux:table.column>
-                        <flux:table.column>Quadrant</flux:table.column>
                     </flux:table.columns>
 
                     <flux:table.rows>
                         @if($todayTasks->count() > 0)
                             @foreach($todayTasks as $todayTask)
-                                <livewire:task-row :task="$todayTask" />
+                                <livewire:task-row :task="$todayTask" wire:key="today-task-{{ $todayTask->id }}" />
                             @endforeach
                         @else
                             <flux:table.row>
@@ -96,14 +95,14 @@
                     <flux:table.columns>
                         <flux:table.column>Due Date</flux:table.column>
                         <flux:table.column>Completed</flux:table.column>    
+                        <flux:table.column>Quadrant</flux:table.column>
                         <flux:table.column>Action</flux:table.column>
                         <flux:table.column>Description</flux:table.column>
-                        <flux:table.column>Quadrant</flux:table.column>
                     </flux:table.columns>
 
                     <flux:table.rows>
                             @foreach($overdueTasks as $overdueTask)
-                                <livewire:overdue-task-row :task="$overdueTask" />
+                                <livewire:overdue-task-row :task="$overdueTask" wire:key="overdue-task-{{ $overdueTask->id }}" />
                             @endforeach
                         </flux:table.rows>
                     </flux:table>
@@ -112,4 +111,9 @@
             @endif
         </div>
     </x-layouts.app>
+@if (session()->has('message'))
+    <div class="mb-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded">
+        {{ session('message') }}
+    </div>
+@endif
 </div> 

@@ -11,8 +11,6 @@ final class Dashboard extends Component
     #[On('task-created')]
     public function refreshTasks(): void {}
 
-    // We will rely on window event to prevent overlay flicker
-
     public function render()
     {
         $todayTasks = Task::withToday()->get();

@@ -16,13 +16,17 @@ final class CreateTaskForm extends Component
     public string $end_at = '';
     public string $notes = '';
 
-    protected $rules = [
+    protected array $rules = [
         'type' => 'required|string',
         'quadrant' => 'required|string',
-        'description' => 'required|string|max:255',
+        'description' => 'required|string|max:255|regex:/\S/',
         'start_at' => 'nullable|date_format:H:i',
         'end_at' => 'nullable|date_format:H:i|after:start_at',
         'notes' => 'nullable|string|max:1000',
+    ];
+
+    protected array $messages = [
+        'description.regex' => 'The description cannot be blank.',
     ];
 
     public function createTask(): void

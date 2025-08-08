@@ -44,7 +44,7 @@
             
             <div>
                 <flux:label for="description">Description</flux:label>
-                <flux:input id="description" type="text" placeholder="Enter task description" x-model="formData.description" />
+                <flux:input id="description" type="text" placeholder="Enter task description" x-model="formData.description" required />
                 @error('description') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
             </div>
             

@@ -124,8 +124,24 @@ class Task extends Model
     return $query->whereDate('created_at', now()->toDateString())
     ->orderByRaw('completed_at is null desc')
     ->orderBy('completed_at', 'asc')
-    ->orderBy('start_at', 'desc')
-    ->orderBy('type', 'asc');
+    ->orderByRaw("
+        CASE quadrant
+            WHEN 'urgent_and_important' THEN 1
+            WHEN 'not_urgent_but_important' THEN 2
+            WHEN 'urgent_but_not_important' THEN 3
+            WHEN 'not_urgent_and_not_important' THEN 4
+            ELSE 99
+        END ASC
+    ")
+    ->orderByRaw("
+        CASE type
+            WHEN 'call' THEN 1
+            WHEN 'do' THEN 2
+            WHEN 'go' THEN 3
+            ELSE 99
+        END ASC
+    ")
+    ->orderBy('start_at', 'desc');
     }
 
     public function scopeWithOverdue($query)
@@ -136,6 +152,23 @@ class Task extends Model
         ->orderByRaw('completed_at is null desc')
         ->orderBy('completed_at', 'asc')
         ->orderBy('created_at', 'desc')
+        ->orderByRaw("
+        CASE quadrant
+            WHEN 'urgent_and_important' THEN 1
+            WHEN 'not_urgent_but_important' THEN 2
+            WHEN 'urgent_but_not_important' THEN 3
+            WHEN 'not_urgent_and_not_important' THEN 4
+            ELSE 99
+        END ASC
+    ")
+        ->orderByRaw("
+        CASE type
+            WHEN 'call' THEN 1
+            WHEN 'do' THEN 2
+            WHEN 'go' THEN 3
+            ELSE 99
+        END ASC
+    ")
         ->orderBy('start_at', 'asc');
     }
 

@@ -29,6 +29,16 @@ enum Quadrant: string
         };
     }
 
+    public function order(): int
+    {
+        return match ($this) {
+            self::UrgentAndImportant => 1,
+            self::NotUrgentButImportant => 2,
+            self::UrgentButNotImportant => 3,
+            self::NotUrgentAndNotImportant => 4,
+        };
+    }
+
     public function color(): string
     {
         return match ($this) {
