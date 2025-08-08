@@ -6,12 +6,12 @@
                     <flux:heading size="xl">
                         {{ \Carbon\Carbon::now()->translatedFormat('l, F j, Y') }}
                     </flux:heading>
-                    <div class="text-3xl font-bold text-gray-900 dark:text-neutral-100">
+                    <div class="text-xl font-bold text-gray-900 dark:text-neutral-100">
                         Q{{ now()->quarter }} | {{ floor(now()->diffInDays(now()->endOfYear())) }} days | {{ Number::format(floor(now()->diffInHours(now()->endOfYear()))) }} hours 
                     </div>
                 </div>
             </div>
-            <div class="relative h-full flex-1 overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700" 
+            <div class="relative w-full overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700" 
                  x-data="{ sidebarOpen: false }"
                  @keydown.cmd.c.window="sidebarOpen = true"
                  @keydown.ctrl.c.window="sidebarOpen = true"
@@ -26,6 +26,7 @@
                     </flux:button>
                 </div>
                 
+                <div class="pl-4">
                 <flux:table>
                     <flux:table.columns>
                         <flux:table.column>Completed</flux:table.column>    
@@ -49,6 +50,7 @@
                         @endif
                     </flux:table.rows>
                 </flux:table>
+                </div>
 
                 <!-- Right Sidebar -->
                 <div x-show="sidebarOpen" 
@@ -79,12 +81,13 @@
             </div>
 
             @if($overdueTasks->count() > 0)
-            <div class="relative h-full flex-1 overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700" 
+            <div class="relative w-full overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700" 
                  x-data="{ sidebarOpen: false }">
                 <div class="flex items-center justify-between p-4 border-b border-neutral-200 dark:border-neutral-700">
                         <flux:heading size="lg">Overdue Tasks ({{ $overdueTasks->count() }})</flux:heading>
                 </div>
                 
+                <div class="pl-4">
                 <flux:table>
                     <flux:table.columns>
                         <flux:table.column>Due Date</flux:table.column>
@@ -100,6 +103,7 @@
                             @endforeach
                         </flux:table.rows>
                     </flux:table>
+                </div>
                 </div>
             @endif
         </div>
