@@ -2,10 +2,14 @@
 
 namespace App\Models;
 
+use App\Collections\TaskCollection;
 use App\Enums\Quadrant;
 use App\Enums\TaskType;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Attributes\CollectedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+#[CollectedBy(TaskCollection::class)]
 
 class Task extends Model
 {
@@ -37,7 +41,7 @@ class Task extends Model
     public function type()
     {
         return $this->belongsTo(TaskType::class);
-    }   
+    }
 
     public function isCompleted()
     {
@@ -69,7 +73,7 @@ class Task extends Model
         return $this->quadrant === Quadrant::NotUrgentAndNotImportant;
     }
 
-    public function isCall()    
+    public function isCall()
     {
         return $this->type === TaskType::Call;
     }
@@ -121,10 +125,10 @@ class Task extends Model
 
     public function scopeWithToday($query)
     {
-    return $query->whereDate('created_at', now()->toDateString())
-    ->orderByRaw('completed_at is null desc')
-    ->orderBy('completed_at', 'asc')
-    ->orderByRaw("
+        return $query->whereDate('created_at', now()->toDateString())
+            ->orderByRaw('completed_at is null desc')
+            ->orderBy('completed_at', 'asc')
+            ->orderByRaw("
         CASE quadrant
             WHEN 'urgent_and_important' THEN 1
             WHEN 'not_urgent_but_important' THEN 2
@@ -133,7 +137,7 @@ class Task extends Model
             ELSE 99
         END ASC
     ")
-    ->orderByRaw("
+            ->orderByRaw("
         CASE type
             WHEN 'call' THEN 1
             WHEN 'do' THEN 2
@@ -141,18 +145,18 @@ class Task extends Model
             ELSE 99
         END ASC
     ")
-    ->orderBy('start_at', 'desc');
+            ->orderBy('start_at', 'desc');
     }
 
     public function scopeWithOverdue($query)
     {
         return $query
-        ->whereDate('created_at', '<', now()->toDateString())
-        ->where('completed_at', null)
-        ->orderByRaw('completed_at is null desc')
-        ->orderBy('completed_at', 'asc')
-        ->orderBy('created_at', 'desc')
-        ->orderByRaw("
+            ->whereDate('created_at', '<', now()->toDateString())
+            ->where('completed_at', null)
+            ->orderByRaw('completed_at is null desc')
+            ->orderBy('completed_at', 'asc')
+            ->orderBy('created_at', 'desc')
+            ->orderByRaw("
         CASE quadrant
             WHEN 'urgent_and_important' THEN 1
             WHEN 'not_urgent_but_important' THEN 2
@@ -161,7 +165,7 @@ class Task extends Model
             ELSE 99
         END ASC
     ")
-        ->orderByRaw("
+            ->orderByRaw("
         CASE type
             WHEN 'call' THEN 1
             WHEN 'do' THEN 2
@@ -169,7 +173,7 @@ class Task extends Model
             ELSE 99
         END ASC
     ")
-        ->orderBy('start_at', 'asc');
+            ->orderBy('start_at', 'asc');
     }
 
     public function scopeWithCompleted($query)
@@ -179,32 +183,32 @@ class Task extends Model
 
     public function isInProgress()
     {
-        return $this->isScheduled() && !$this->isCompleted();
+        return $this->isScheduled() && ! $this->isCompleted();
     }
 
     public function isNotInProgress()
     {
-        return !$this->isScheduled() || $this->isCompleted();
+        return ! $this->isScheduled() || $this->isCompleted();
     }
 
     public function isOverdue()
     {
-        return $this->start_at < now() && !$this->isCompleted();
+        return $this->start_at?->isPast() === true && ! $this->isCompleted();
     }
 
     public function isDueToday()
     {
-        return $this->start_at->isToday() && !$this->isCompleted();
+        return $this->start_at?->isToday() === true && ! $this->isCompleted();
     }
 
     public function isDueTomorrow()
     {
-        return $this->start_at->isTomorrow() && !$this->isCompleted();
+        return $this->start_at?->isTomorrow() === true && ! $this->isCompleted();
     }
 
     public function status(): string
     {
-        return match(true) {
+        return match (true) {
             $this->isCompleted() => 'completed',
             $this->isOverdue() => 'overdue',
             $this->isDueToday() => 'due_today',
